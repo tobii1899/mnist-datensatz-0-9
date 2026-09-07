@@ -21,7 +21,7 @@ jobs:
 
       - name: Convert Model to TensorFlow.js
         run: |
-          pip install "numpy<2.0.0" "protobuf<5.0.0" tf-keras tensorflowjs
+          pip install "protobuf<5.0.0" "tensorflowjs>=4.0.0" tf-keras
           tensorflowjs_converter --input_format=keras mnist_model.keras frontend/model_js
 
       - name: Deploy to GitHub Pages
