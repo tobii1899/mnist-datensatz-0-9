@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Neural Digit</title>
+
+    <link rel="stylesheet" href="/frontend/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+</head>
+
+<body>
+
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <nav>
+        <div class="logo">
+            <span class="logo-dot"></span>
+            Neural Digit
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            Model online
+        </div>
+    </nav>
+
+    <main>
+
+        <section class="hero">
+            <div class="eyebrow">
+                MNIST Neural Network
+            </div>
+
+            <h1>Draw a digit.</h1>
+
+            <p>
+                Write any number from 0 to 9 and let the
+                neural network determine what you wrote.
+            </p>
+        </section>
+
+        <section class="app">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <span class="panel-title">
+                        Your drawing
+                    </span>
+
+                    <span class="panel-label">
+                        280 × 280
+                    </span>
+                </div>
+
+                <div class="canvas-wrapper">
+                    <canvas
+                        id="canvas"
+                        width="280"
+                        height="280">
+                    </canvas>
+                </div>
+
+                <div class="controls">
+                    <button
+                        id="clearButton"
+                        class="clear-button">
+                        Clear
+                    </button>
+
+                    <button
+                        id="predictButton"
+                        class="predict-button">
+                        Predict
+                        <span>→</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <span class="panel-title">
+                        Prediction
+                    </span>
+
+                    <span class="panel-label">
+                        Confidence
+                    </span>
+                </div>
+
+                <div class="prediction">
+                    <span
+                        id="predictionNumber"
+                        class="prediction-empty">
+                        Draw something
+                    </span>
+                </div>
+
+                <div
+                    id="results"
+                    class="results">
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer>
+            Dense Neural Network · MNIST · 97.76% accuracy
+        </footer>
+
+    </main>
+
+    <script src="/frontend/script.js"></script>
+
+</body>
+</html>
