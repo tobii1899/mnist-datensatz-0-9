@@ -1,5 +1,4 @@
 venv312/
 venv/
-*.keras
 __pycache__/
 .vscode/
