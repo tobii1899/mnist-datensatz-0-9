@@ -50,7 +50,7 @@ def forward(X_train, Y_train):
         layers.MaxPooling2D((2, 2)),
 
         layers.Flatten(),
-        
+
         layers.Dense(64, activation='relu'),
         layers.Dense(10, activation='softmax')
     ])
@@ -83,7 +83,7 @@ def forward(X_train, Y_train):
 X_train, X_test, Y_train, Y_test = load_data()
 model, history = forward(X_train, Y_train)
 
-model.save("mnist_model.keras")
+model.save("mnist_model.h5")
 
 print(model)
 print(history)
