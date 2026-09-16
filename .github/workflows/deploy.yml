@@ -47,13 +47,12 @@ jobs:
           print("Successfully replaced batchInputShape with batch_input_shape")
           '
 
-      # Löscht alle vorherigen Deployments aus der GitHub-Historie
+      # Löscht alte Deployments-Einträge aus der GitHub-Historie
       - name: Delete old deployments
-        uses: stripe/github-action-delete-deployments@v2
+        uses: stridespace/delete-deployments-action@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           environment: github-pages
-          only_deactivated: false
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
