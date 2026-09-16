@@ -17,6 +17,11 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    # Das hier hat gefehlt:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
