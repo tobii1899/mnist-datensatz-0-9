@@ -4,8 +4,8 @@ from PIL import Image, ImageOps
 import numpy as np
 import io
 
-app = Flask(__name__, static_folder="frontend")
-model = load_model("mnist_model.keras")
+app = Flask(__name__, static_folder="frontend", static_url_path="")
+model = load_model("mnist_model.h5")
 
 def preprocess_mnist(image):
     image = image.convert("RGBA")
@@ -56,6 +56,10 @@ def predict():
     results.sort(key=lambda x: x["probability"], reverse=True)
 
     return jsonify(results)
+
+@app.route("/model_js/<path:filename>")
+def serve_model(filename):
+    return send_from_directory("frontend/model_js", filename)
 
 
 if __name__ == "__main__":

@@ -36,21 +36,19 @@ def load_data():
     return X_train, X_test, Y_train, Y_test
 
 def forward(X_train, Y_train):
-    model = Sequential([
-        layers.Input(shape=(28, 28, 1)),
-
+    data_augmentation = tf.keras.Sequential([
         layers.RandomRotation(0.12),
         layers.RandomTranslation(0.08, 0.08),
         layers.RandomZoom(0.1),
+    ])
 
+    model = Sequential([
+        layers.Input(shape=(28, 28, 1)),
         layers.Conv2D(32, (3, 3), activation='relu'),
         layers.MaxPooling2D((2, 2)),
-
         layers.Conv2D(64, (3, 3), activation='relu'),
         layers.MaxPooling2D((2, 2)),
-
         layers.Flatten(),
-
         layers.Dense(64, activation='relu'),
         layers.Dense(10, activation='softmax')
     ])
@@ -68,13 +66,14 @@ def forward(X_train, Y_train):
         verbose=1
     )
 
+    augmented_X_train = data_augmentation(X_train)
+
     history = model.fit(
-        X_train,
+        augmented_X_train,
         Y_train,
         validation_split=0.2,
         epochs=50,
         batch_size=32,
-        verbose=1,
         callbacks=[early_stopping]
     )
 
