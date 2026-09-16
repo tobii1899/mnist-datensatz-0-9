@@ -5,8 +5,13 @@ on:
     branches: [ main ]
 
 permissions:
-  contents: write
-  deployments: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -47,16 +52,14 @@ jobs:
           print("Successfully replaced batchInputShape with batch_input_shape")
           '
 
-      # Löscht alte Deployments-Einträge aus der GitHub-Historie
-      - name: Delete old deployments
-        uses: stridespace/delete-deployments-action@v2
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          environment: github-pages
+          path: './frontend'
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./frontend
-          force_orphan: true
+        id: deployment
+        uses: actions/deploy-pages@v4
