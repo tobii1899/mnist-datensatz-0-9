@@ -84,8 +84,14 @@ model, history = forward(X_train, Y_train)
 
 model.save("mnist_model.h5")
 
-print(model)
-print(history)
+print("INPUT SHAPE:", model.input_shape)
+print("OUTPUT SHAPE:", model.output_shape)
+print("INPUT:", model.inputs)
+print("LAYERS:")
+
+for layer in model.layers:
+    print(layer.name, layer.__class__.__name__, layer.input_shape if hasattr(layer, "input_shape") else "")
+
 
 test_loss, test_accuracy = model.evaluate(X_test, Y_test)
 
