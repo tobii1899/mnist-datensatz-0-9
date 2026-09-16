@@ -30,8 +30,8 @@ jobs:
           rm -rf frontend/model_js
           mkdir -p frontend/model_js
           tensorflowjs_converter \
-            --input_format=keras \
-            mnist_model.h5 \
+            --input_format=tf_keras \
+            mnist_model.keras \
             frontend/model_js
 
       - name: Deploy to GitHub Pages
