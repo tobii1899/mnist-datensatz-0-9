@@ -36,46 +36,6 @@ jobs:
 
           sed -i 's/"batchInputShape"/"batch_input_shape"/g' frontend/model_js/model.json
 
-      - name: Fix TensorFlow.js InputLayer
-        run: |
-          python - <<'PY'
-          import json
-
-          path = "frontend/model_js/model.json"
-
-          with open(path, "r", encoding="utf-8") as f:
-              data = json.load(f)
-
-          layers = data["modelTopology"]["model_config"]["config"]["layers"]
-
-          found = False
-
-          for layer in layers:
-              if layer.get("class_name") == "InputLayer":
-                  config = layer["config"]
-
-                  if "batch_shape" in config:
-                      config["batchInputShape"] = config.pop("batch_shape")
-                      found = True
-
-          if not found:
-              print("WARNING: No batch_shape found in InputLayer")
-          else:
-              print("InputLayer fixed successfully.")
-
-          with open(path, "w", encoding="utf-8") as f:
-              json.dump(data, f, separators=(",", ":"))
-
-          # Verify result
-          with open(path, "r", encoding="utf-8") as f:
-              fixed_data = json.load(f)
-
-          for layer in fixed_data["modelTopology"]["model_config"]["config"]["layers"]:
-              if layer.get("class_name") == "InputLayer":
-                  print("Final InputLayer config:")
-                  print(layer["config"])
-          PY
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
