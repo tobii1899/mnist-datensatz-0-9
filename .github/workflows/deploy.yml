@@ -29,11 +29,12 @@ jobs:
         run: |
           rm -rf frontend/model_js
           mkdir -p frontend/model_js
-
           tensorflowjs_converter \
             --input_format=keras \
             mnist_model.h5 \
             frontend/model_js
+
+          sed -i 's/"batchInputShape"/"batch_input_shape"/g' frontend/model_js/model.json
 
       - name: Fix TensorFlow.js InputLayer
         run: |
