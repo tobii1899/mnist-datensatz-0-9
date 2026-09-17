@@ -45,6 +45,34 @@ jobs:
             mnist_model.h5 \
             frontend/model_js
 
+      - name: Normalize Keras input shape for TF.js
+        run: |
+          python - <<'PY'
+          import json
+
+          path = "frontend/model_js/model.json"
+
+          with open(path, "r", encoding="utf-8") as file:
+              model_json = json.load(file)
+
+          def normalize_keys(value):
+              if isinstance(value, dict):
+                  return {
+                      "batchInputShape" if key == "batch_shape" else key: normalize_keys(item)
+                      for key, item in value.items()
+                  }
+              if isinstance(value, list):
+                  return [normalize_keys(item) for item in value]
+              return value
+
+          model_json = normalize_keys(model_json)
+
+          with open(path, "w", encoding="utf-8") as file:
+              json.dump(model_json, file)
+
+          print("Normalized batch_shape to batchInputShape")
+          PY
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
