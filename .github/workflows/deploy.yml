@@ -45,18 +45,6 @@ jobs:
             mnist_model.h5 \
             frontend/model_js
 
-      - name: Fix Keras 3 JSON format for TF.js
-        run: |
-          python -c '
-          path = "frontend/model_js/model.json"
-          with open(path, "r", encoding="utf-8") as f:
-              content = f.read()
-          content = content.replace("\"batchInputShape\"", "\"batch_input_shape\"")
-          with open(path, "w", encoding="utf-8") as f:
-              f.write(content)
-          print("Successfully replaced batchInputShape with batch_input_shape")
-          '
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
